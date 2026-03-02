@@ -74,3 +74,22 @@ class Solution:
                 i += 1
         
         return res
+
+
+Day 3 : Move all zeros to the end 
+class Solution:
+	def pushZerosToEnd(self, arr):
+    	j = 0
+    	
+    	# move all non-zero elements to the front
+    	for i in range (len(arr)):
+    	    if arr[i] != 0:
+    	        arr[j] = arr[i]
+    	        j += 1
+    	        
+    	 #fill the remaining positions with zeros 
+    	while j < len(arr):
+    	     arr[j] = 0
+    	     j += 1
+    	 
+    	return arr
