@@ -1,1 +1,35 @@
-Day - 8:
+Day - 8: class Solution:
+    def minWindow(self, s, p):
+        from collections import Counter
+        
+        need = Counter(p)
+        required = len(p)
+        
+        left = 0
+        min_len = float('inf')
+        start = 0
+        
+        for right in range(len(s)):
+            
+            if s[right] in need:
+                if need[s[right]] > 0:
+                    required -= 1
+                need[s[right]] -= 1
+            
+            while required == 0:
+                
+                if right - left + 1 < min_len:
+                    min_len = right - left + 1
+                    start = left
+                
+                if s[left] in need:
+                    need[s[left]] += 1
+                    if need[s[left]] > 0:
+                        required += 1
+                
+                left += 1
+        
+        if min_len == float('inf'):
+            return ""
+        
+        return s[start:start + min_len]
