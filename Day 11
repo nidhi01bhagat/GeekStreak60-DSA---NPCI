@@ -1,2 +1,17 @@
-Day 11 
+Day 11 :
 
+class Solution:
+    def largestSwap(self, s):
+        s = list(s)
+        n = len(s)
+        
+        # store last occurrence of each digit
+        last = {int(s[i]): i for i in range(n)}
+        
+        for i in range(n):
+            for d in range(9, int(s[i]), -1):
+                if d in last and last[d] > i:
+                    s[i], s[last[d]] = s[last[d]], s[i]
+                    return "".join(s)
+        
+        return "".join(s)
