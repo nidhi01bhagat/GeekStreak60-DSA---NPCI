@@ -1,4 +1,5 @@
-Day : 12 
+Day : 12 Subarrays with First Element Minimum
+
 class Solution:
     def countSubarrays(self, arr):
         n = len(arr)
