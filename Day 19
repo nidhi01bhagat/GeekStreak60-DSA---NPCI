@@ -1,0 +1,66 @@
+Day 19 : Burning Tree
+
+'''
+class Node:
+
+    def __init__(self, val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+
+from collections import deque
+
+class Solution:
+    def minTime(self, root, target):
+        
+        # Step 1: Map parent pointers
+        parent = {}
+        
+        def markParent(node, par):
+            if not node:
+                return
+            if par:
+                parent[node] = par
+            markParent(node.left, node)
+            markParent(node.right, node)
+        
+        markParent(root, None)
+        
+        # Step 2: Find target node
+        def findTarget(node, target):
+            if not node:
+                return None
+            if node.data == target:
+                return node
+            
+            left = findTarget(node.left, target)
+            if left:
+                return left
+            return findTarget(node.right, target)
+        
+        targetNode = findTarget(root, target)
+        
+        # Step 3: BFS to burn tree
+        q = deque([targetNode])
+        visited = set([targetNode])
+        
+        time = 0
+        
+        while q:
+            size = len(q)
+            burned = False
+            
+            for _ in range(size):
+                node = q.popleft()
+                
+                for nei in [node.left, node.right, parent.get(node)]:
+                    if nei and nei not in visited:
+                        visited.add(nei)
+                        q.append(nei)
+                        burned = True
+            
+            if burned:
+                time += 1
+        
+        return time
