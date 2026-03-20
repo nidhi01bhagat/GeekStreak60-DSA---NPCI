@@ -1,0 +1,31 @@
+Day 22 : Predecessor and Successor
+
+class Solution:
+    def findPreSuc(self, root, key):
+        pred = None
+        succ = None
+
+        curr = root
+
+        while curr:
+            if curr.data < key:
+                pred = curr
+                curr = curr.right
+            elif curr.data > key:
+                succ = curr
+                curr = curr.left
+            else:
+                # predecessor (max in left subtree)
+                temp = curr.left
+                while temp:
+                    pred = temp
+                    temp = temp.right
+
+                # successor (min in right subtree)
+                temp = curr.right
+                while temp:
+                    succ = temp
+                    temp = temp.left
+                break
+
+        return pred, succ
