@@ -1,1 +1,30 @@
 Day 23  
+class Solution:
+    def countBSTs(self, arr):
+        n = len(arr)
+        
+        # Step 1: store original indices
+        indexed = [(val, i) for i, val in enumerate(arr)]
+        
+        # Step 2: sort by value
+        indexed.sort()
+        
+        # Step 3: Catalan DP
+        dp = [0] * (n + 1)
+        dp[0] = dp[1] = 1
+        
+        for i in range(2, n + 1):
+            for j in range(i):
+                dp[i] += dp[j] * dp[i - j - 1]
+        
+        # Step 4: compute answers
+        res = [0] * n
+        
+        for i in range(n):
+            L = i
+            R = n - i - 1
+            val, original_index = indexed[i]
+            
+            res[original_index] = dp[L] * dp[R]
+        
+        return res
