@@ -1,4 +1,4 @@
-Day 23  
+Day 23  :Number of BST From Array
 class Solution:
     def countBSTs(self, arr):
         n = len(arr)
