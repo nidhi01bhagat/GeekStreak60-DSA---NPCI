@@ -1,1 +1,31 @@
 Day 25 : Length of Longest Cycle in a Graph
+class Solution:
+    def longestCycle(self, V, edges):
+        # Convert to direct mapping (since one outgoing edge)
+        graph = [-1] * V
+        for u, v in edges:
+            graph[u] = v
+        
+        visited = [False] * V
+        max_cycle = -1
+        
+        for i in range(V):
+            if visited[i]:
+                continue
+            
+            curr = i
+            time_map = {}
+            step = 0
+            
+            while curr != -1 and not visited[curr]:
+                visited[curr] = True
+                time_map[curr] = step
+                step += 1
+                curr = graph[curr]
+            
+            # If cycle found
+            if curr != -1 and curr in time_map:
+                cycle_len = step - time_map[curr]
+                max_cycle = max(max_cycle, cycle_len)
+        
+        return max_cycle
