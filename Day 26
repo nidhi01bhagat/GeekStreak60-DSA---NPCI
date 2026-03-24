@@ -1,1 +1,34 @@
-Day 26 : 
+Day 26 : Course Schedule I
+
+from collections import deque
+
+class Solution:
+    def canFinish(self, n, prerequisites):
+        
+        graph = [[] for _ in range(n)]
+        indegree = [0] * n
+        
+        # Build graph
+        for x, y in prerequisites:
+            graph[y].append(x)
+            indegree[x] += 1
+        
+        # Queue for nodes with 0 indegree
+        q = deque()
+        for i in range(n):
+            if indegree[i] == 0:
+                q.append(i)
+        
+        count = 0
+        
+        # BFS (Kahn’s Algorithm)
+        while q:
+            node = q.popleft()
+            count += 1
+            
+            for nei in graph[node]:
+                indegree[nei] -= 1
+                if indegree[nei] == 0:
+                    q.append(nei)
+        
+        return count == n
