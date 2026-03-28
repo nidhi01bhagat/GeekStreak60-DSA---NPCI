@@ -1,0 +1,48 @@
+Day 29 : Chocolates Pickup
+class Solution:
+    def maxChocolate(self, grid):
+        n = len(grid)
+        m = len(grid[0])
+        
+        prev = [[0]*m for _ in range(m)]
+        
+        # Base case: last row
+        for j1 in range(m):
+            for j2 in range(m):
+                if j1 == j2:
+                    prev[j1][j2] = grid[n-1][j1]
+                else:
+                    prev[j1][j2] = grid[n-1][j1] + grid[n-1][j2]
+        
+        # Bottom-up DP
+        for i in range(n-2, -1, -1):
+            curr = [[0]*m for _ in range(m)]
+            
+            for j1 in range(m):
+                for j2 in range(m):
+                    
+                    maxi = float('-inf')
+                    
+                    for dj1 in [-1, 0, 1]:
+                        for dj2 in [-1, 0, 1]:
+                            
+                            nj1 = j1 + dj1
+                            nj2 = j2 + dj2
+                            
+                            if 0 <= nj1 < m and 0 <= nj2 < m:
+                                value = prev[nj1][nj2]
+                            else:
+                                value = float('-inf')
+                            
+                            if j1 == j2:
+                                value += grid[i][j1]
+                            else:
+                                value += grid[i][j1] + grid[i][j2]
+                            
+                            maxi = max(maxi, value)
+                    
+                    curr[j1][j2] = maxi
+            
+            prev = curr
+        
+        return prev[0][m-1]
