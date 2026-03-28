@@ -1,0 +1,53 @@
+Day 30 :: Articulation Point - II
+
+class Solution:
+    def articulationPoints(self, V, edges):
+        
+        # Build graph
+        graph = [[] for _ in range(V)]
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+        
+        visited = [False] * V
+        tin = [-1] * V
+        low = [-1] * V
+        mark = [0] * V
+        
+        timer = [0]
+        
+        def dfs(node, parent):
+            visited[node] = True
+            tin[node] = low[node] = timer[0]
+            timer[0] += 1
+            
+            child = 0
+            
+            for nei in graph[node]:
+                if nei == parent:
+                    continue
+                
+                if not visited[nei]:
+                    dfs(nei, node)
+                    low[node] = min(low[node], low[nei])
+                    
+                    # articulation condition
+                    if low[nei] >= tin[node] and parent != -1:
+                        mark[node] = 1
+                    
+                    child += 1
+                else:
+                    low[node] = min(low[node], tin[nei])
+            
+            # root case
+            if parent == -1 and child > 1:
+                mark[node] = 1
+        
+        # handle disconnected graph
+        for i in range(V):
+            if not visited[i]:
+                dfs(i, -1)
+        
+        res = [i for i in range(V) if mark[i] == 1]
+        
+        return res if res else [-1]
