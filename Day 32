@@ -1,0 +1,30 @@
+Day 32 :: Minimum cost to connect all houses in a city
+
+import heapq
+
+class Solution:
+    def minCost(self, houses):
+        n = len(houses)
+        
+        visited = [False] * n
+        minHeap = [(0, 0)]  # (cost, node)
+        total_cost = 0
+        
+        while minHeap:
+            cost, u = heapq.heappop(minHeap)
+            
+            if visited[u]:
+                continue
+            
+            visited[u] = True
+            total_cost += cost
+            
+            for v in range(n):
+                if not visited[v]:
+                    x1, y1 = houses[u]
+                    x2, y2 = houses[v]
+                    
+                    dist = abs(x1 - x2) + abs(y1 - y2)
+                    heapq.heappush(minHeap, (dist, v))
+        
+        return total_cost
