@@ -1,0 +1,11 @@
+Day 33 :: Buy Stock with Transaction Fee
+class Solution:
+    def maxProfit(self, arr, k):
+        buy = -arr[0]
+        sell = 0
+        
+        for i in range(1, len(arr)):
+            buy = max(buy, sell - arr[i])
+            sell = max(sell, buy + arr[i] - k)
+        
+        return sell
