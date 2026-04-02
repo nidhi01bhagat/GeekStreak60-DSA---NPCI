@@ -1,4 +1,6 @@
-Day 35 : class Solution:
+Day 35 : Painting the Fence
+
+class Solution:
     def countWays(self, n, k):
         if n == 1:
             return k
