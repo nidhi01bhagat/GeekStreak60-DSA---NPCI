@@ -1,0 +1,14 @@
+Day 36 : Print Diagonally
+
+class Solution:
+    def diagView(self, mat):
+        n = len(mat)
+        result = []
+        
+        for s in range(2*n - 1):
+            for i in range(n):
+                j = s - i
+                if 0 <= j < n:
+                    result.append(mat[i][j])
+        
+        return result
