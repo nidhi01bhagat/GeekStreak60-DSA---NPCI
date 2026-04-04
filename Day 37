@@ -1,0 +1,11 @@
+Day 37 : Gray Code
+class Solution:
+    def graycode(self, n):
+        result = []
+        
+        for i in range(1 << n):  # 2^n
+            gray = i ^ (i >> 1)
+            binary = format(gray, f'0{n}b')
+            result.append(binary)
+        
+        return result
