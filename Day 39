@@ -20,7 +20,7 @@ class Solution:
     def huffmanCodes(self, s, f):
         n = len(s)
         
-        # ✅ EDGE CASE (IMPORTANT)
+        #  EDGE CASE (IMPORTANT)
         if n == 1:
             return ["0"]
         
