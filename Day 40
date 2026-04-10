@@ -1,0 +1,38 @@
+Day 40 : Stable Marriage Problem
+class Solution:
+    def stableMarriage(self, men, women):
+        n = len(men)
+        
+        # rank[w][m] = preference of woman w for man m
+        rank = [[0]*n for _ in range(n)]
+        
+        for w in range(n):
+            for i in range(n):
+                rank[w][women[w][i]] = i
+        
+        free_men = list(range(n))
+        partner_m = [-1]*n
+        partner_w = [-1]*n
+        next_proposal = [0]*n
+        
+        while free_men:
+            m = free_men.pop(0)
+            
+            w = men[m][next_proposal[m]]
+            next_proposal[m] += 1
+            
+            if partner_w[w] == -1:
+                partner_w[w] = m
+                partner_m[m] = w
+            else:
+                m1 = partner_w[w]
+                
+                if rank[w][m] < rank[w][m1]:
+                    partner_w[w] = m
+                    partner_m[m] = w
+                    partner_m[m1] = -1
+                    free_men.append(m1)
+                else:
+                    free_men.append(m)
+        
+        return partner_m
