@@ -1,0 +1,55 @@
+Day 46 : 
+Next Smallest Palindrome
+
+class Solution:
+    def nextPalindrome(self, num):
+        n = len(num)
+        
+        # Edge case
+        if all(x == 9 for x in num):
+            return [1] + [0]*(n-1) + [1]
+        
+        res = num[:]
+        mid = n // 2
+        
+        i = mid - 1
+        j = mid + 1 if n % 2 else mid
+        
+        # check if left < right
+        while i >= 0 and res[i] == res[j]:
+            i -= 1
+            j += 1
+        
+        left_smaller = False
+        if i < 0 or res[i] < res[j]:
+            left_smaller = True
+        
+        # mirror left to right
+        while i >= 0:
+            res[j] = res[i]
+            i -= 1
+            j += 1
+        
+        # handle middle increment
+        if left_smaller:
+            carry = 1
+            
+            if n % 2 == 1:
+                res[mid] += carry
+                carry = res[mid] // 10
+                res[mid] %= 10
+                i = mid - 1
+                j = mid + 1
+            else:
+                i = mid - 1
+                j = mid
+            
+            while i >= 0 and carry:
+                res[i] += carry
+                carry = res[i] // 10
+                res[i] %= 10
+                res[j] = res[i]
+                i -= 1
+                j += 1
+        
+        return res
