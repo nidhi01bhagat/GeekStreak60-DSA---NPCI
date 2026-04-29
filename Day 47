@@ -1,0 +1,5 @@
+Day 47 : Remove Spaces
+
+class Solution:
+    def removeSpaces(self, s):
+        return s.replace(" ", "")
