@@ -1,0 +1,42 @@
+Day 54 : Two water Jug problem
+
+import math
+
+class Solution:
+    
+    def solve(self, fromCap, toCap, d):
+        fromJug, toJug = 0, 0
+        steps = 0
+        
+        while fromJug != d and toJug != d:
+            
+            if fromJug == 0:
+                fromJug = fromCap
+                steps += 1
+            
+            transfer = min(fromJug, toCap - toJug)
+            toJug += transfer
+            fromJug -= transfer
+            steps += 1
+            
+            if fromJug == d or toJug == d:
+                break
+            
+            if toJug == toCap:
+                toJug = 0
+                steps += 1
+        
+        return steps
+
+    def minSteps(self, m, n, d):
+        
+        if d == m or d == n:
+            return 1
+        
+        if d > max(m, n):
+            return -1
+        
+        if d % math.gcd(m, n) != 0:
+            return -1
+        
+        return min(self.solve(m, n, d), self.solve(n, m, d))
