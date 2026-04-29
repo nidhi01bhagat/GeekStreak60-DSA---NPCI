@@ -1,0 +1,29 @@
+Day 58: - Opposite Sign Pair Reduction
+
+
+class Solution:
+    def reducePairs(self, arr):
+        stack = []
+        
+        for num in arr:
+            
+            while stack and stack[-1] * num < 0:
+                top = stack[-1]
+                
+                if abs(top) > abs(num):
+                    num = 0
+                    break
+                
+                elif abs(top) < abs(num):
+                    stack.pop()
+                    continue
+                
+                else:
+                    stack.pop()
+                    num = 0
+                    break
+            
+            if num != 0:
+                stack.append(num)
+        
+        return stack
