@@ -1,0 +1,32 @@
+Day 49 : Implement Atoi
+
+class Solution:
+    def myAtoi(self, s):
+        i = 0
+        n = len(s)
+        
+        # skip spaces
+        while i < n and s[i] == ' ':
+            i += 1
+        
+        # check sign
+        sign = 1
+        if i < n and (s[i] == '+' or s[i] == '-'):
+            if s[i] == '-':
+                sign = -1
+            i += 1
+        
+        num = 0
+        
+        # read digits
+        while i < n and s[i].isdigit():
+            digit = ord(s[i]) - ord('0')
+            
+            # handle overflow
+            if num > (2**31 - 1 - digit) // 10:
+                return 2147483647 if sign == 1 else -2147483648
+            
+            num = num * 10 + digit
+            i += 1
+        
+        return sign * num
