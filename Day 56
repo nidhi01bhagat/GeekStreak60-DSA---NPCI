@@ -1,0 +1,19 @@
+Day 56 : Two Equal Sum Subarrays
+class Solution:
+    def canSplit(self, arr):
+        total = sum(arr)
+        
+        # if total is odd → impossible
+        if total % 2 != 0:
+            return False
+        
+        target = total // 2
+        prefix_sum = 0
+        
+        for num in arr:
+            prefix_sum += num
+            
+            if prefix_sum == target:
+                return True
+        
+        return False
